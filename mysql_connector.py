@@ -18,4 +18,4 @@ mycursor.execute("select * from Employee")
 
 data = mycursor.fetchall()
 for i in data:
-    print(f"First_Name: {i[0]}, Last_Name: {i[1]}, Employee_ID: {i[2]}")
+    print(f"First_Name: {i[0]}, Last_Name: {i[1]}, Employee_ID: {i[2]}, Phone_Number: {i[3]}")
