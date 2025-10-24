@@ -21,4 +21,4 @@ for i in data:
     print(f"First_Name: {i[0]}, Last_Name: {i[1]}, Employee_ID: {i[2]}, Phone_Number: {i[3]}")
 
 for j in data:
-    print(f"First_Name:" {i[0]})
+    print("First_Name:", {i[0]})
