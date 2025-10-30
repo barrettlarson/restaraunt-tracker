@@ -25,7 +25,7 @@ function App() {
   return (
     <>
       <div className="container">
-        <h1>Restaraunt Tracker</h1>
+        <h1>Restaurant Tracker</h1>
 
         <div className="table-links">
           <button className="table-btn" onClick={openModal}>
