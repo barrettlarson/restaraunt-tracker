@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 function App() {
+  const API_BASE = "http://localhost:8000";
   const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
@@ -15,7 +16,7 @@ function App() {
   const [isDeleteIngredientModalOpen, setIsDeleteIngredientModalOpen] = useState(false);
   const [isPurchaseOrderModalOpen, setIsPurchaseOrderModalOpen] = useState(false);
   const [isDeletePurchaseOrderModalOpen, setIsDeletePurchaseOrderModalOpen] = useState(false);
-  
+
 
   const openEmployeeModal = () => setIsEmployeeModalOpen(true);
   const closeEmployeeModal = () => setIsEmployeeModalOpen(false);
@@ -58,6 +59,32 @@ function App() {
 
   const openDeletePurchaseOrderModal = () => setIsDeletePurchaseOrderModalOpen(true);
   const closeDeletePurchaseOrderModal = () => setIsDeletePurchaseOrderModalOpen(false);
+
+  async function submitAddEmployee(e) {
+    e.preventDefault();
+    const first = document.getElementById("firstName").value;
+    const last = document.getElementById("lastName").value;
+    const id = document.getElementById("employeeId").value;
+    const phone = document.getElementById("phoneNumber").value;
+
+    try {
+      const res = await fetch(`${API_BASE}/employees`, {
+        method: "POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({
+          first_name: first.trim(),
+          last_name: last.trim(),
+          employee_id: Number(id),
+          phone_number: phone.trim()
+        })
+      });
+    if (!res.ok) throw new Error(await res.text());
+    alert("Employee added!");
+    closeEmployeeModal();
+    } catch (error) {
+      alert("Failed to add an employee: " + error.message);
+    }
+  }
 
   const handleEmployeeModalClick = (e) => {
     if (e.target.className === 'modal') {
@@ -211,39 +238,39 @@ function App() {
       
 
       {isEmployeeModalOpen && (
-        <div className="modal" onClick={handleEmployeeModalClick}>
+        <div className="modal">
           <div className="modal-content">
             <div className="modal-header">
               <h2>New Employee</h2>
               <span className="close" onClick={closeEmployeeModal}>&times;</span>
             </div>
             
-            <form className="modal-form">
+            <form className="modal-form" onSubmit={submitAddEmployee}>
               <div className="form-group">
                 <label htmlFor="firstName">First Name:</label>
-                <input/>
+                <input id="firstName" required/>
               </div>
 
               <div className="form-group">
                 <label htmlFor="lastName">Last Name:</label>
-                <input/>
+                <input id="lastName" required/>
               </div>
 
               <div className="form-group">
                 <label htmlFor="employeeId">Employee ID:</label>
-                <input/>
+                <input id="employeeId" required/>
               </div>
 
               <div className="form-group">
                 <label htmlFor="phoneNumber">Phone Number:</label>
-                <input/>
+                <input id="phoneNumber" required/>
               </div>
 
               <div className="modal-footer">
                 <button type="button" className="btn-cancel" onClick={closeEmployeeModal}>
                   Cancel
                 </button>
-                <button type="button" className="btn-submit" onClick={closeEmployeeModal}>
+                <button type="submit" className="btn-submit">
                   Add
                 </button>
               </div>
