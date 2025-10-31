@@ -7,6 +7,14 @@ function App() {
   const [isDeleteSupplierModalOpen, setIsDeleteSupplierModalOpen] = useState(false);
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
   const [isDeleteItemModalOpen, setIsDeleteItemModalOpen] = useState(false);
+  const [isRecipeModalOpen, setIsRecipeModalOpen] = useState(false);
+  const [isDeleteRecipeModalOpen, setIsDeleteRecipeModalOpen] = useState(false);
+  const [isCustomerOrderModalOpen, setIsCustomerOrderModalOpen] = useState(false);
+  const [isDeleteCustomerOrderModalOpen, setIsDeleteCustomerOrderModalOpen] = useState(false);
+  const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
+  const [isDeleteIngredientModalOpen, setIsDeleteIngredientModalOpen] = useState(false);
+  const [isPurchaseOrderModalOpen, setIsPurchaseOrderModalOpen] = useState(false);
+  const [isDeletePurchaseOrderModalOpen, setIsDeletePurchaseOrderModalOpen] = useState(false);
   
 
   const openEmployeeModal = () => setIsEmployeeModalOpen(true);
@@ -26,6 +34,30 @@ function App() {
 
   const openDeleteItemModal = () => setIsDeleteItemModalOpen(true);
   const closeDeleteItemModal = () => setIsDeleteItemModalOpen(false);
+
+  const openRecipeModal = () => setIsRecipeModalOpen(true);
+  const closeRecipeModal = () => setIsRecipeModalOpen(false);
+
+  const openDeleteRecipeModal = () => setIsDeleteRecipeModalOpen(true);
+  const closeDeleteRecipeModal = () => setIsDeleteRecipeModalOpen(false);
+
+  const openCustomerOrderModal = () => setIsCustomerOrderModalOpen(true);
+  const closeCustomerOrderModal = () => setIsCustomerOrderModalOpen(false);
+
+  const openDeleteCustomerOrderModal = () => setIsDeleteCustomerOrderModalOpen(true);
+  const closeDeleteCustomerOrderModal = () => setIsDeleteCustomerOrderModalOpen(false);
+
+  const openIngredientModal = () => setIsIngredientModalOpen(true);
+  const closeIngredientModal = () => setIsIngredientModalOpen(false);
+
+  const openDeleteIngredientModal = () => setIsDeleteIngredientModalOpen(true);
+  const closeDeleteIngredientModal = () => setIsDeleteIngredientModalOpen(false);
+
+  const openPurchaseOrderModal = () => setIsPurchaseOrderModalOpen(true);
+  const closePurchaseOrderModal = () => setIsPurchaseOrderModalOpen(false);
+
+  const openDeletePurchaseOrderModal = () => setIsDeletePurchaseOrderModalOpen(true);
+  const closeDeletePurchaseOrderModal = () => setIsDeletePurchaseOrderModalOpen(false);
 
   const handleEmployeeModalClick = (e) => {
     if (e.target.className === 'modal') {
@@ -63,6 +95,54 @@ function App() {
     }
   };
 
+  const handleRecipeModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeRecipeModal();
+    }
+  };
+
+  const handleDeleteRecipeModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeDeleteRecipeModal();
+    }
+  };
+
+  const handleCustomerOrderModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeCustomerOrderModal();
+    }
+  };
+
+  const handleDeleteCustomerOrderModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeDeleteCustomerOrderModal();
+    }
+  };
+
+  const handleIngredientModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeIngredientModal();
+    }
+  };
+
+  const handleDeleteIngredientModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeDeleteIngredientModal();
+    }
+  };
+
+  const handlePurchaseOrderModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closePurchaseOrderModal();
+    }
+  };
+
+  const handleDeletePurchaseOrderModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeDeletePurchaseOrderModal();
+    }
+  };
+
 
   return (
     <>
@@ -93,7 +173,39 @@ function App() {
           <button className="table-btn" onClick={openDeleteItemModal}>
             Delete Item
           </button>
-      </div>
+        </div>
+        <div className="table-links">
+          <button className="table-btn" onClick={openRecipeModal}>
+            Add Recipe
+          </button>
+          <button className="table-btn" onClick={openDeleteRecipeModal}>
+            Delete Recipe
+          </button>
+        </div>
+        <div className="table-links">
+          <button className="table-btn" onClick={openCustomerOrderModal}>
+            Add Customer Order
+          </button>
+          <button className="table-btn" onClick={openDeleteCustomerOrderModal}>
+            Delete Customer Order
+          </button>
+        </div>
+        <div className="table-links">
+          <button className="table-btn" onClick={openIngredientModal}>
+            Add Ingredient
+          </button>
+          <button className="table-btn" onClick={openDeleteIngredientModal}>
+            Delete Ingredient
+          </button>
+        </div>
+        <div className="table-links">
+          <button className="table-btn" onClick={openPurchaseOrderModal}>
+            Add Purchase Order
+          </button>
+          <button className="table-btn" onClick={openDeletePurchaseOrderModal}>
+            Delete Purchase Order
+          </button>
+        </div>
       </div>
 
       
@@ -280,6 +392,267 @@ function App() {
                   Cancel
                 </button>
                 <button type="button" className="btn-submit" onClick={closeDeleteItemModal}>
+                  Delete
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isRecipeModalOpen && (
+        <div className="modal" onClick={handleRecipeModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>New Recipe</h2>
+              <span className="close" onClick={closeRecipeModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="recipeName">Name:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="recipeCost">Cost:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closeRecipeModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closeRecipeModal}>
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isDeleteRecipeModalOpen && (
+        <div className="modal" onClick={handleDeleteRecipeModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>Delete Recipe</h2>
+              <span className="close" onClick={closeDeleteRecipeModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="deleteRecipeName">Name:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closeDeleteRecipeModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closeDeleteRecipeModal}>
+                  Delete
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isCustomerOrderModalOpen && (
+        <div className="modal" onClick={handleCustomerOrderModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>New Customer Order</h2>
+              <span className="close" onClick={closeCustomerOrderModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="orderId">Order ID:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="orderDate">Date:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="orderCost">Cost:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closeCustomerOrderModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closeCustomerOrderModal}>
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isDeleteCustomerOrderModalOpen && (
+        <div className="modal" onClick={handleDeleteCustomerOrderModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>Delete Customer Order</h2>
+              <span className="close" onClick={closeDeleteCustomerOrderModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="deleteOrderId">Order ID:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closeDeleteCustomerOrderModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closeDeleteCustomerOrderModal}>
+                  Delete
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isIngredientModalOpen && (
+        <div className="modal" onClick={handleIngredientModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>New Ingredient</h2>
+              <span className="close" onClick={closeIngredientModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="ingredientName">Name:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="ingredientAmount">Amount:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="storageType">Storage Type:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closeIngredientModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closeIngredientModal}>
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isDeleteIngredientModalOpen && (
+        <div className="modal" onClick={handleDeleteIngredientModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>Delete Ingredient</h2>
+              <span className="close" onClick={closeDeleteIngredientModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="deleteIngredientName">Name:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closeDeleteIngredientModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closeDeleteIngredientModal}>
+                  Delete
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isPurchaseOrderModalOpen && (
+        <div className="modal" onClick={handlePurchaseOrderModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>New Purchase Order</h2>
+              <span className="close" onClick={closePurchaseOrderModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="purchaseOrderId">Order ID:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="purchaseAmount">Amount:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="purchaseCost">Cost:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="purchaseName">Name:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="purchaseDate">Date:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closePurchaseOrderModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closePurchaseOrderModal}>
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isDeletePurchaseOrderModalOpen && (
+        <div className="modal" onClick={handleDeletePurchaseOrderModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>Delete Purchase Order</h2>
+              <span className="close" onClick={closeDeletePurchaseOrderModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="deletePurchaseOrderId">Order ID:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closeDeletePurchaseOrderModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closeDeletePurchaseOrderModal}>
                   Delete
                 </button>
               </div>
