@@ -49,6 +49,22 @@ def add_employee():
     finally:
         cur.close(); conn.close()
 
+@app.delete("/employees/<int:employee_id>")
+def delete_employee(employee_id: int):
+    conn = get_conn(); cur = conn.cursor()
+    try:
+        cur.execute("DELETE FROM Employee WHERE Employee_ID = %s", (employee_id,))
+        conn.commit()
+        if cur.rowcount == 0:
+            return jsonify({"error": "Employee not found"}), 404
+        return {"ok": True}
+    except mysql.connector.Error as e:
+        conn.rollback()
+        return jsonify({"error": str(e)}), 400
+    finally:
+        cur.close(); conn.close()
+
+
 @app.post("/ingredients")
 def add_ingredient():
     data = request.get_json(force=True)
@@ -58,6 +74,11 @@ def add_ingredient():
 
     if not name or not storage_type or amount is None or not str(amount).strip():
         return jsonify({"error": "Missing required fields"}), 400
+
+    try:
+        amount = int(amount)
+    except ValueError:
+        return jsonify({"error":"amount must be an integer"}), 400
 
     conn = get_conn()
     cur = conn.cursor()
@@ -71,6 +92,21 @@ def add_ingredient():
     except mysql.connector.Error as e:
         conn.rollback()
         return jsonify({"error" : str(e)}), 400
+    finally:
+        cur.close(); conn.close()
+
+@app.delete("/ingredients/<name>")
+def delete_ingredient(name: str):
+    conn = get_conn(); cur = conn.cursor()
+    try:
+        cur.execute("DELETE FROM Ingredient WHERE name = %s", (name,))
+        conn.commit()
+        if cur.rowcount == 0:
+            return jsonify({"error": "Ingredient not found"}), 404
+        return {"ok": True}
+    except mysql.connector.Error as e:
+        conn.rollback()
+        return jsonify({"error": str(e)}), 400
     finally:
         cur.close(); conn.close()
 

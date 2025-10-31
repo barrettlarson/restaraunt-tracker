@@ -86,6 +86,35 @@ function App() {
     }
   }
 
+  async function submitDeleteEmployee(e) {
+    e.preventDefault();
+
+    const idRaw = document.getElementById("deleteEmployeeId").value.trim();
+    if (!idRaw) {
+      alert("Please enter an Employee ID.");
+      return;
+    }
+    const id = Number(idRaw);
+    if (!Number.isFinite(id)) {
+      alert("Employee ID must be a number.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/employees/${id}`, { method: "DELETE" });
+      if (!res.ok) {
+        let msg = await res.text();
+        try { msg = JSON.parse(msg).error || msg; } catch {}
+        throw new Error(msg || `HTTP ${res.status}`);
+      }
+      alert("Employee deleted.");
+      closeDeleteModal();
+    } catch (error) {
+      alert("Failed to delete employee: " + error.message);
+    }
+  }
+
+
   async function submitAddIngreident(e) {
     e.preventDefault();
     const name = document.getElementById("ingredientName").value;
@@ -107,6 +136,29 @@ function App() {
       closeIngredientModal();
     } catch (error) {
       alert("Failed to add an ingredient: " + error.message);
+    }
+  }
+
+  async function submitDeleteIngredient(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("deleteIngredientName").value.trim();
+    if (!name) {
+      alert("Please enter an ingredient name.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/ingredients/${name}`, { method: "DELETE" });
+      if (!res.ok) {
+        let msg = await res.text();
+        try { msg = JSON.parse(msg).error || msg; } catch {}
+        throw new Error(msg || `HTTP ${res.status}`);
+      }
+      alert("Ingredient deleted.");
+      closeDeleteModal();
+    } catch (error) {
+      alert("Failed to delete ingredient: " + error.message);
     }
   }
 
@@ -311,17 +363,17 @@ function App() {
               <span className="close" onClick={closeDeleteModal}>&times;</span>
             </div>
             
-            <form className="modal-form">
+            <form className="modal-form" onSubmit={submitDeleteEmployee}>
               <div className="form-group">
                 <label htmlFor="deleteEmployeeId">Employee ID:</label>
-                <input/>
+                <input id="deleteEmployeeId"/>
               </div>
 
               <div className="modal-footer">
                 <button type="button" className="btn-cancel" onClick={closeDeleteModal}>
                   Cancel
                 </button>
-                <button type="button" className="btn-submit" onClick={closeDeleteModal}>
+                <button type="submit" className="btn-submit">
                   Delete
                 </button>
               </div>
@@ -619,17 +671,17 @@ function App() {
               <span className="close" onClick={closeDeleteIngredientModal}>&times;</span>
             </div>
             
-            <form className="modal-form">
+            <form className="modal-form" onSubmit={submitDeleteIngredient}>
               <div className="form-group">
                 <label htmlFor="deleteIngredientName">Name:</label>
-                <input/>
+                <input id="deleteIngredientName"/>
               </div>
 
               <div className="modal-footer">
                 <button type="button" className="btn-cancel" onClick={closeDeleteIngredientModal}>
                   Cancel
                 </button>
-                <button type="button" className="btn-submit" onClick={closeDeleteIngredientModal}>
+                <button type="submit" className="btn-submit">
                   Delete
                 </button>
               </div>
