@@ -49,5 +49,31 @@ def add_employee():
     finally:
         cur.close(); conn.close()
 
+@app.post("/ingredients")
+def add_ingredient():
+    data = request.get_json(force=True)
+    name = data.get("name", "").strip()
+    amount = data.get("amount")
+    storage_type = data.get("storage_type", "").strip()
+
+    if not name or not storage_type or amount is None or not str(amount).strip():
+        return jsonify({"error": "Missing required fields"}), 400
+
+    conn = get_conn()
+    cur = conn.cursor()
+    try: 
+        cur.execute(
+            "INSERT INTO Ingredient (Name, Amount, Storage_Type) VALUES (%s, %s, %s)",
+            (name, amount, storage_type)
+        )
+        conn.commit()
+        return jsonify({"ok": True}), 201
+    except mysql.connector.Error as e:
+        conn.rollback()
+        return jsonify({"error" : str(e)}), 400
+    finally:
+        cur.close(); conn.close()
+
+
 if __name__ == "__main__":
     app.run(port=8000, debug=True)

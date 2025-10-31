@@ -86,6 +86,30 @@ function App() {
     }
   }
 
+  async function submitAddIngreident(e) {
+    e.preventDefault();
+    const name = document.getElementById("ingredientName").value;
+    const amount = document.getElementById("ingredientAmount").value;
+    const storage = document.getElementById("storageType").value;
+
+    try {
+      const res = await fetch(`${API_BASE}/ingredients`, {
+        method: "POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({
+          name: name.trim(),
+          amount: Number(amount),
+          storage_type: storage.trim()
+        })
+      });
+      if (!res.ok) throw new Error(await res.text());
+      alert("Ingredient added!");
+      closeIngredientModal();
+    } catch (error) {
+      alert("Failed to add an ingredient: " + error.message);
+    }
+  }
+
   const handleEmployeeModalClick = (e) => {
     if (e.target.className === 'modal') {
       closeEmployeeModal();
@@ -558,27 +582,27 @@ function App() {
               <span className="close" onClick={closeIngredientModal}>&times;</span>
             </div>
             
-            <form className="modal-form">
+            <form className="modal-form" onSubmit={submitAddIngreident}>
               <div className="form-group">
                 <label htmlFor="ingredientName">Name:</label>
-                <input/>
+                <input id="ingredientName"/>
               </div>
 
               <div className="form-group">
                 <label htmlFor="ingredientAmount">Amount:</label>
-                <input/>
+                <input id="ingredientAmount"/>
               </div>
 
               <div className="form-group">
                 <label htmlFor="storageType">Storage Type:</label>
-                <input/>
+                <input id="storageType"/>
               </div>
 
               <div className="modal-footer">
                 <button type="button" className="btn-cancel" onClick={closeIngredientModal}>
                   Cancel
                 </button>
-                <button type="button" className="btn-submit" onClick={closeIngredientModal}>
+                <button type="submit" className="btn-submit">
                   Add
                 </button>
               </div>
