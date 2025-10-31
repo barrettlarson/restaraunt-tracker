@@ -1,13 +1,16 @@
 import { useState } from 'react';
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
   const [isDeleteSupplierModalOpen, setIsDeleteSupplierModalOpen] = useState(false);
+  const [isItemModalOpen, setIsItemModalOpen] = useState(false);
+  const [isDeleteItemModalOpen, setIsDeleteItemModalOpen] = useState(false);
+  
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openEmployeeModal = () => setIsEmployeeModalOpen(true);
+  const closeEmployeeModal = () => setIsEmployeeModalOpen(false);
 
   const openDeleteModal = () => setIsDeleteModalOpen(true);
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
@@ -18,9 +21,15 @@ function App() {
   const openDeleteSupplierModal = () => setIsDeleteSupplierModalOpen(true);
   const closeDeleteSupplierModal = () => setIsDeleteSupplierModalOpen(false);
 
-  const handleModalClick = (e) => {
+  const openItemModal = () => setIsItemModalOpen(true);
+  const closeItemModal = () => setIsItemModalOpen(false);
+
+  const openDeleteItemModal = () => setIsDeleteItemModalOpen(true);
+  const closeDeleteItemModal = () => setIsDeleteItemModalOpen(false);
+
+  const handleEmployeeModalClick = (e) => {
     if (e.target.className === 'modal') {
-      closeModal();
+      closeEmployeeModal();
     }
   };
 
@@ -42,13 +51,26 @@ function App() {
     }
   };
 
+  const handleItemModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeItemModal();
+    }
+  };
+
+  const handleDeleteItemModalClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeDeleteItemModal();
+    }
+  };
+
+
   return (
     <>
       <div className="container">
         <h1>Restaurant Tracker</h1>
 
         <div className="table-links">
-          <button className="table-btn" onClick={openModal}>
+          <button className="table-btn" onClick={openEmployeeModal}>
             Add Employee
           </button>
           <button className="table-btn" onClick={openDeleteModal}>
@@ -64,14 +86,24 @@ function App() {
             Delete Supplier
           </button>
         </div>
+        <div className="table-links">
+          <button className="table-btn" onClick={openItemModal}>
+            Add Item
+          </button>
+          <button className="table-btn" onClick={openDeleteItemModal}>
+            Delete Item
+          </button>
+      </div>
       </div>
 
-      {isModalOpen && (
-        <div className="modal" onClick={handleModalClick}>
+      
+
+      {isEmployeeModalOpen && (
+        <div className="modal" onClick={handleEmployeeModalClick}>
           <div className="modal-content">
             <div className="modal-header">
               <h2>New Employee</h2>
-              <span className="close" onClick={closeModal}>&times;</span>
+              <span className="close" onClick={closeEmployeeModal}>&times;</span>
             </div>
             
             <form className="modal-form">
@@ -96,10 +128,10 @@ function App() {
               </div>
 
               <div className="modal-footer">
-                <button type="button" className="btn-cancel" onClick={closeModal}>
+                <button type="button" className="btn-cancel" onClick={closeEmployeeModal}>
                   Cancel
                 </button>
-                <button type="button" className="btn-submit" onClick={closeModal}>
+                <button type="button" className="btn-submit" onClick={closeEmployeeModal}>
                   Add
                 </button>
               </div>
@@ -198,6 +230,64 @@ function App() {
           </div>
         </div>
       )}
+      {isItemModalOpen && (
+        <div className="modal" onClick={handleItemModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>New Item</h2>
+              <span className="close" onClick={closeItemModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="itemId">Item ID:</label>
+                <input/>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="expirationDate">Expiration Date:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closeItemModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closeItemModal}>
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {isDeleteItemModalOpen && (
+        <div className="modal" onClick={handleDeleteItemModalClick}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>Delete Item</h2>
+              <span className="close" onClick={closeDeleteItemModal}>&times;</span>
+            </div>
+            
+            <form className="modal-form">
+              <div className="form-group">
+                <label htmlFor="deleteItemId">Item ID:</label>
+                <input/>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn-cancel" onClick={closeDeleteItemModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn-submit" onClick={closeDeleteItemModal}>
+                  Delete
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      
     </>
   );
 }
